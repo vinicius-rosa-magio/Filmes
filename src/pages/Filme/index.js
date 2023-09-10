@@ -14,25 +14,21 @@ function Filme() {
 
   const navigate = useNavigate();
 
-  // pegando o filme que foi clicado.
   useEffect(() => {
     async function loadFilme() {
-      //A função await é usada para esperar até que a chamada à API seja concluída antes de continuar a execução do código.
-      //api.get(...): Isso representa uma chamada HTTP GET para o endpoint 
-      //movie/${id} da API. O objeto de configuração passado como segundo argumento contém os parâmetros da requisição, como a chave da API e o idioma desejado.
       await api.get(`/movie/${id}`, {
         params: {
           api_key: "12e934c2bf958467e1903fc2a5af0852",
           language: "pt-BR",
         }
       })
-        // se for verdadeiro abri o filme 
+        
         .then((response) => {
           setFilme(response.data);
           setLoading(false);
         })
 
-        // se for falso da um aviso 
+        
         .catch(() => {
           console.log("fime não encontrado")
           navigate("/", { replace: true })
@@ -40,7 +36,7 @@ function Filme() {
         })
     }
 
-    loadFilme(); //Aqui, a função loadFilme é chamada para efetivamente fazer a chamada à API quando o componente é montado.
+    loadFilme();
 
 
     return () => {
@@ -49,13 +45,13 @@ function Filme() {
 
   }, [navigate, id])
 
-  // salvando em localstorge
+  
   function salvarFilme() {
     const minhaLista = localStorage.getItem("@primeFlix");
 
     let filmesSalvos = JSON.parse(minhaLista) || []; // ||significa ou 
 
-    // verificando se o filme ja esta salvo 
+   
     const hasFilme = filmesSalvos.some((filmesSalvo) => filmesSalvo.id === filme.id)
 
     if (hasFilme) {
@@ -63,14 +59,14 @@ function Filme() {
       return;
     }
 
-    // se não tiver salvo, salvar ele na lista. primeiro verifica se esta lista, se não tiver salvar.
+    
     filmesSalvos.push(filme);
     localStorage.setItem("@primeFlix", JSON.stringify(filmesSalvos));
     toast.success("Filme salvo com sucesso!")
 
   }
 
-  // loading mesma coisa que o home.
+ 
   if (loading) {
     return (
       <div className="filme-info">
@@ -79,7 +75,7 @@ function Filme() {
     )
   }
 
-  // todas as informações são pegas na propria api
+  
   return (
     <div className="filme-info">
       <h1>{filme.title}</h1>

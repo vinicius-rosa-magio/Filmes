@@ -1,4 +1,3 @@
-//npm install react-toastify uma bliblioteca para alerta. vai em app para configurar
 
 import "./favoritos.css";
 import { useEffect, useState } from "react";
@@ -9,14 +8,13 @@ function Favoritos() {
 
     const [filmes, setFilmes] = useState([])
 
-    // buscando os filmes salvos no localstorge
+   
     useEffect(() => {
         const minhaLista = localStorage.getItem("@primeFlix");
         setFilmes(JSON.parse(minhaLista) || []);
     }, [])
 
 
-    //excluir filme da tela e do localstorge e salvando com o item excluido
     function excluirFilme(id) {
         let filtroFilmes = filmes.filter((filme) => {
             return(filme.id !== id)
@@ -33,7 +31,7 @@ function Favoritos() {
             <h1>Meus filmes</h1>
                 {filmes.length === 0 && <span>Você não tem nem um filme salvo :(</span>}
             <ul>
-                {filmes.map((filme) => { // pecorrendo toda minha lista que salvei
+                {filmes.map((filme) => { 
                     return (
                         <li key={filme.id}>
                             <span>{filme.title}</span>
